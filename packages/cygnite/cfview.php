@@ -237,6 +237,7 @@ class CFView
     {
         if (is_array($arrayResult)) {
             $this->results = (array) $arrayResult;
+            $this->assignToProperties($arrayResult);
         }
 
         $this->loadView();
