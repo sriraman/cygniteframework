@@ -86,7 +86,7 @@ class Image
     public function resize()
     {
         $path = array();
-        echo $src = getcwd().DS.str_replace(array('/','\\'), DS, $this->directory);	 /* read the source image */
+        $src = getcwd().DS.str_replace(array('/','\\'), DS, $this->directory);	 /* read the source image */
 
 
         if (file_exists($src)) {
@@ -148,9 +148,7 @@ class Image
      */
     private function imageCreateFrom($type, $src, $func = null)
     {
-        echo "<br>";
         echo $func = $this->changeToLower(strtolower(__FUNCTION__).$type);
-        echo "<br>";
 
         return (is_callable($func))
             ? $func($src)
@@ -170,7 +168,6 @@ class Image
      */
     private function image($type, $thumb, $name, $func = null)
     {
-        echo "<br>".$this->thumbPath;
         $func = $this->changeToLower(strtolower(__FUNCTION__).$type);
 
         /** @var $func TYPE_NAME */
@@ -187,7 +184,7 @@ class Image
                 ).$name
             )
             ) {
-                echo getcwd().DS.str_replace(array('/', '\\'), DS, $this->thumbPath).$name;exit;
+                
                 chmod(getcwd().DS.str_replace(array('/', '\\'), DS, $this->thumbPath).$name, 0777);
             } else {
                 throw new \Exception("Unknown Exception  while generating thumb image");
