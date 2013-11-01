@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Whoops' => array($baseDir . '/vendor/filp/whoops/src'),
-	'Cygnite' => array($baseDir . '/Packages/'),
+    //'Cygnite' => array($baseDir . '/Packages/'),
     /*'Symfony\\Component\\Routing\\' => array($vendorDir . '/symfony/routing'),
     'Symfony\\Component\\HttpKernel\\' => array($vendorDir . '/symfony/http-kernel'),
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
