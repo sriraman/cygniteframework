@@ -48,8 +48,12 @@ function show($resultArray = array(), $hasExit = "")
     }
 }
 
+require CF_SYSTEM.DS.'cygnite'.DS.'base'.DS.'events'.EXT;
+require CF_SYSTEM.DS.'cygnite'.DS.'base'.DS.'router'.EXT;
+
 global $router,$events;
 
+//create Event handler to attach all events
 $events = new Cygnite\Base\Events();
 
 $events->attach("exception", '\\Cygnite\\onExceptions');
