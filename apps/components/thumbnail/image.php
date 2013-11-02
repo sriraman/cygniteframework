@@ -1,6 +1,8 @@
 <?php
 namespace Apps\Components\Thumbnail;
 
+use Cygnite\Inflectors;
+
 /**
  *  Cygnite Framework
  *
@@ -148,7 +150,7 @@ class Image
      */
     private function imageCreateFrom($type, $src, $func = null)
     {
-        echo $func = $this->changeToLower(strtolower(__FUNCTION__).$type);
+        echo $func = Cygnite::loader()->inflectors->changeToLower(__FUNCTION__.$type);
 
         return (is_callable($func))
             ? $func($src)
@@ -168,7 +170,7 @@ class Image
      */
     private function image($type, $thumb, $name, $func = null)
     {
-        $func = $this->changeToLower(strtolower(__FUNCTION__).$type);
+        $func = Cygnite::loader()->inflectors->changeToLower(__FUNCTION__.$type);
 
         /** @var $func TYPE_NAME */
         //if (is_callable($func)) {
