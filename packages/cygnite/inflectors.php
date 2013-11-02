@@ -18,16 +18,16 @@ if (!defined('CF_SYSTEM')) {
  *   obtain it through the world-wide-web, please send an email
  *   to sanjoy@hotmail.com so I can send you a copy immediately.
  *
- * @Package                         :  Packages
- * @Sub Packages               :  Library
- * @Filename                       : Inflectors
- * @Description                   : This library will be available on next version
- * @Author                          :   Cygnite Dev Team
- * @Copyright                     :  Copyright (c) 2013 - 2014,
- * @Link	                  :  http://www.cygniteframework.com
- * @Since	                  :  Version 1.0
+ * @Package             :  Packages
+ * @Sub Packages        :  Library
+ * @Filename            :  Inflectors
+ * @Description         :  This library will be available on next version
+ * @Author              :  Cygnite Dev Team
+ * @Copyright           :  Copyright (c) 2013 - 2014,
+ * @Link	            :  http://www.cygniteframework.com
+ * @Since	            :  Version 1.0
  * @Filesource
- * @Warning                     :  Any changes in this library can cause abnormal behaviour of the framework
+ * @Warning             :  Any changes in this library can cause abnormal behaviour of the framework
  *
  *
  */
@@ -70,7 +70,7 @@ class Inflectors
      * @param $s
      * @return string
      */
-    private static function actionpath($s)
+    private static function actionPath($s)
     {
         $s = preg_replace('#(.)(?=[A-Z])#', '$1-', $s);
         $s = strtolower($s);
@@ -86,7 +86,7 @@ class Inflectors
      * @param $s
      * @return string
      */
-    private static function pathaction($s)
+    private static function pathAction($s)
     {
         $s = strtolower($s);
         $s = preg_replace('#-(?=[a-z])#', ' ', $s);
@@ -121,7 +121,7 @@ class Inflectors
      * @param $s
      * @return string
      */
-    private static function pathview($s)
+    private static function pathView($s)
     {
         $s = strtolower($s);
         $s = preg_replace('#([.-])(?=[a-z])#', '$1 ', $s);
@@ -130,5 +130,14 @@ class Inflectors
         $s = str_replace('- ', '', $s);
         return $s;
     }
-
+    
+     /**
+     * @param $string
+     * $param null function name to build dynamically
+     * @return source name
+     */
+    public function changeToLower($string)
+    {
+        return strtolower($string);
+    }
 }
