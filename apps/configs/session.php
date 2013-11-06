@@ -12,7 +12,7 @@ if (!defined('CF_SYSTEM')) {
  *
  *   This source file is subject to the MIT license that is bundled
  *   with this package in the file LICENSE.txt.
- *   http://www.appsntech.com/license.txt
+ *   http://www.cygniteframework.com/license.txt
  *   If you did not receive a copy of the license and are unable to
  *   obtain it through the world-wide-web, please send an email
  *   to sanjoy@hotmail.com so I can send you a copy immediately.
@@ -34,7 +34,7 @@ if (!defined('CF_SYSTEM')) {
 
 
 return array(
-   /**
+   /*
     *--------------------------------------------------------------------------
     * Session Config
     *--------------------------------------------------------------------------
@@ -44,7 +44,7 @@ return array(
     */
     'cf_session'       => false , //Set true or false to start session default is false
 
-   /**
+   /*
     *--------------------------------------------------------------------------
     * Session Name
     *--------------------------------------------------------------------------
