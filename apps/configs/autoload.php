@@ -19,16 +19,16 @@ if (!defined('CF_SYSTEM')) {
  *   obtain it through the world-wide-web, please send an email
  *   to sanjoy@hotmail.com so I can send you a copy immediately.
  *
- *@package                         :  Apps
- *@subpackages                :  Configurations
- *@filename                        :  autoload
- *@description                    : This file is used to specify which files should be register on cygnite engine by default.
- *@author                           : Sanjoy Dey
- *@copyright                      :  Copyright (c) 2013 - 2014,
- *@link	                  :  http://www.cygniteframework.com
- *@since	                 :  Version 1.0
+ *@package                  :  Apps
+ *@subpackages              :  Configurations
+ *@filename                 :  autoload
+ *@description              :  This file is used to specify which files should be register on cygnite engine by default.
+ *@author                   :  Sanjoy Dey
+ *@copyright                :  Copyright (c) 2013 - 2014,
+ *@link	                    :  http://www.cygniteframework.com
+ *@since	                :  Version 1.0
  *@filesource
- *@warning                      :  If you don't protect this directory from direct web access, anybody will be able to see your configuaration and settings.
+ *@warning                  :  If you don't protect this directory from direct web access, anybody will be able to see your configuaration and settings.
  *
  *
  */
@@ -79,7 +79,6 @@ return array(
     */
    Cygnite::loader()->registerModels(
        array(
-            'Activerecords' => '\\Apps\\Models\\Activerecords',
             'Guestbook' => '\\Apps\\Models\\Guestbook',
             'Records'=>'\\Apps\\Models\\Records',
             'Users'=>'\\Apps\\Models\\Users'
