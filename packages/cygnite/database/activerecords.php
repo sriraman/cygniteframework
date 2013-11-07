@@ -164,15 +164,7 @@ class ActiveRecords extends Connections
             }
         }
 
-        var_dump(substr($name, 6));
-
-        if (substr($name, 6)) {
-            show($name);
-        }
-        exit;
-
-
-        //throw new \Exception("Invalid method $name called  ");
+        throw new \Exception("Invalid method $name called  ");
     }
 
     private function findBy($key, $values = array())
