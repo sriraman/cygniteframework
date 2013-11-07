@@ -7,18 +7,51 @@ use Cygnite\Database\Exceptions\DatabaseException;
 use PDO;
 use PDOException;
 
+/**
+ *  Cygnite Framework
+ *
+ *  An open source application development framework for PHP 5.3x or newer
+ *
+ *   License
+ *
+ *   This source file is subject to the MIT license that is bundled
+ *   with this package in the file LICENSE.txt.
+ *   http://www.cygniteframework.com/license.txt
+ *   If you did not receive a copy of the license and are unable to
+ *   obtain it through the world-wide-web, please send an email
+ *   to sanjoy@hotmail.com so I can send you a copy immediately.
+ *
+ * @Package                   :  Packages
+ * @Sub Packages              :  Database
+ * @Filename                  :  ActiveRecords
+ * @Description               :  Avctive records to handle database manipulations. As like
+ *                               Read, write, erase, update etc.
+ * @Author                    :  Sanjoy Dey
+ * @Copyright                 :  Copyright (c) 2013 - 2014,
+ * @Link	                  :  http://www.cygniteframework.com
+ * @Since	                  :  Version 1.0
+ * @Filesource
+ * @Warning                   :  Any changes in this library can cause abnormal behaviour of the framework
+ *
+ */
+
 class ActiveRecords extends Connections
 {
+    //Hold your connection object
     public $pdo;
 
+    //set closed property as true is set else false
     public $closed;
 
+    //Hold all your table fields in attributes
     public $attributes = array();
 
     public $data = array();
 
+    //set your pdo statement here
     private $_statement;
 
+    //hold all your fields name which to select from table
     private $_selectColumns;
 
     private $_fromWhere;
@@ -37,18 +70,27 @@ class ActiveRecords extends Connections
 
     private $_groupBy;
 
+    //set user defined database name into it.
     protected $database;
 
+    //set user defined table name into it.
     protected $tableName;
 
+    //set user defined table primary key
     protected $primaryKey;
 
+    // set query builder query into property
     private $sqlQuery;
 
     private $debugQuery;
 
     private $distinct;
 
+    /*
+     * Restrict users to create active records object Directly
+     * Get the database configurations
+     *
+     */
     protected function __construct()
     {
         $config = Configurations::instance();
@@ -73,20 +115,41 @@ class ActiveRecords extends Connections
         }
     }
 
+    /*
+     * Set your table columns dynamically
+     * @access public
+     * @param $key hold your table columns
+     * @param $value hold your table column values
+     * @return void
+     *
+     */
     public function __set($key, $value)
     {
         $this->attributes[$key] = $value;
     }
-
+    /*
+     * Get your table columns dynamically
+     * @access public
+     * @param $key
+     * @return void
+     *
+     */
     public function __get($key)
     {
         try {
             return isset($this->attributes[$key]) ? $this->attributes[$key] : null;
         } catch (\Exception $ex) {
-            echo $ex->getTraceAsString();
+            throw new $ex->getMessage();
         }
     }
 
+    /**
+     * Call framework defined method based on user input
+     * $name method name
+     * $arguments pass arguments to method dynamically
+     * return mixed
+     *
+     */
     public function __call($name, $arguments)
     {
         if ($name == 'save') {
@@ -100,9 +163,30 @@ class ActiveRecords extends Connections
                 }
             }
         }
-        throw new \Exception("Invalid method $name called  ");
+
+        var_dump(substr($name, 6));
+
+        if (substr($name, 6)) {
+            show($name);
+        }
+        exit;
+
+
+        //throw new \Exception("Invalid method $name called  ");
     }
 
+    private function findBy($key, $values = array())
+    {
+
+        echo $key;
+    }
+    /*
+     * Save data into table
+     * @access private
+     * @param $arguments empty array
+     * @return true
+     *
+     */
     private function saveInTable($arguments = array())
     {
         $fields = $values = array();
@@ -138,6 +222,13 @@ class ActiveRecords extends Connections
         }
     }
 
+    /*
+    * Update user data into table by key
+    * @access private
+    * @param $args update by table fields
+    * @return boolean
+    *
+    */
     private function updateTable($args)
     {
         $query  =$debugQuery= $x = "";
@@ -177,7 +268,7 @@ class ActiveRecords extends Connections
 
             return $statement->execute();
 
-        } catch ( \PDOException  $exception) {
+        } catch (\PDOException  $exception) {
                echo  $exception->getMessage();
         }
     }
@@ -344,7 +435,12 @@ class ActiveRecords extends Connections
 
         return $this;
     }
-
+    /*
+     * Extract user conditions from array
+     * @access private
+     * @param $arr array to extract conditions
+     * @return array
+     */
     private function extractConditions($arr)
     {
         //$pattern  = '/([A-Za-z_]+[A-Za-z_0-9]?)[ ]?(!=|=|<=|<|>=|>|like|clike|slike|not
@@ -366,6 +462,13 @@ class ActiveRecords extends Connections
         return $result;
     }
 
+    /*
+     * Get the distinct value of the column
+     * @access public
+     * @param $column
+     * @return $this
+     *
+     */
     public function distinct($column)
     {
         $this->distinct = "DISTINCT($column)";
@@ -396,6 +499,12 @@ class ActiveRecords extends Connections
         return $this;
     }
 
+    /*
+    * Group By function to group columns based on aggregate functions
+    * @access   public
+    * @param    string
+    * @return   object
+    */
     public function groupBy($column)
     {
         if (is_null($column)) {
@@ -449,14 +558,22 @@ class ActiveRecords extends Connections
 
         return $this;
     }
-
+    /*
+    * Convert array results to json encoded format
+    * @access   public
+    * @return   object
+    */
     public function toJson()
     {
         $this->serialize = 'json';
 
         return $this;
     }
-
+    /*
+    * Convert array results to simple xml format
+    * @access   public
+    * @return   object
+    */
     public function toXML()
     {
         $this->serialize = 'xml';
@@ -510,6 +627,14 @@ class ActiveRecords extends Connections
         }
     }
 
+    /*
+     * fetch data as user defined format
+     *
+     * @access private
+     * @param object $statement
+     * @param string $fetchMode
+     * @return mixed.
+     */
     private function fetchAs($statement, $fetchMode)
     {
         $data = array();
@@ -541,12 +666,27 @@ class ActiveRecords extends Connections
 
     }
 
+    /*
+     * Get number of rows returned by query
+     *
+     * @access public
+     * @return int.
+     */
     public function rowCount()
     {
         $statement = $this->getDbStatement($this->database);
         return $statement->rowCount();
     }
 
+    /*
+    * Build your query internally here
+    *
+    * @access private
+    * @param  $groupBy column name
+    * @param  $orderBy sort column
+    * @param  $limit limit your query results
+    * @return void
+    */
     private function buildQuery($groupBy, $orderBy, $limit)
     {
         $searchKey = strpos($this->_fromWhere, 'AND');
@@ -581,6 +721,13 @@ class ActiveRecords extends Connections
 
     ########
 
+    /*
+    * Build user raw query
+    *
+    * @access public
+    * @param  string $sql
+    * @return object pointer $this
+    */
     public function query($sql)
     {
         $this->_statement = $this->pdo->query($sql);
@@ -588,11 +735,35 @@ class ActiveRecords extends Connections
         return $this;
     }
 
+    /*
+    * Execute user raw queries
+    *
+    * @access public
+    * @return array results
+    */
+    public function execute()
+    {
+        return $this->_statement->execute();
+    }
+
+    /*
+    * Find single row
+    *
+    * @access public
+    * @return array results
+    */
     public function find()
     {
         return $this->_statement->fetch();
     }
 
+    /*
+    * get all rows of table
+    *
+    * @access public
+    * @param  $fetchModel fetch type
+    * @return array results
+    */
     public function getAll($fetchMode = PDO::FETCH_OBJECT)
     {
         $data = array();
