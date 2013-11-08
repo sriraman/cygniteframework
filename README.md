@@ -25,7 +25,7 @@ iv. Object oriented programming with MVC architecture.
 
 v.  User friendly structures of Cygnite framework helps you painless development.
 
-vi. Dynamic routing feature makes your work simpler.
+vi. Dynamic routing feature makes your work simpler. Creating REST web service or REST API both easy now.
 
 vii. Cygnite has a great user guide which allows you to adapt as quick as possible.
 
