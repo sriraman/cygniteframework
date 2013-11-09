@@ -3,7 +3,6 @@ namespace Cygnite\Libraries;
 
 use Cygnite\Cygnite;
 use Cygnite\Helpers\Config;
-use Cygnite\Helpers\GHelper;
 use Cygnite\Security;
 
 /**
@@ -60,7 +59,9 @@ class Session extends Security
 
     public function __construct()
     {
-        $this->config =  Config::getConfigItems('config_items');
+        $config = array();
+        $config =  Config::getConfigItems('config_items');
+        $this->config = $config['session_config'];
 
         $keys = array('HTTP_USER_AGENT',
                       'SERVER_PROTOCOL',
@@ -124,7 +125,7 @@ class Session extends Security
             $this->startSession();
         }
 
-        register_shutdown_function(array($this,'close_session'));
+        register_shutdown_function(array($this, 'closeSession'));
     }
 
     private function startSession()
@@ -164,14 +165,14 @@ class Session extends Security
 
             $path = str_replace('/', DS, APPPATH);
 
-            if (is_dir($dir_path = APPPATH.'temp/sessions') === false) {
+            if (is_dir($dir_path = APPPATH.DS.'temp'.DS.'sessions') === false) {
                 if (!mkdir($dir_path, 0777)) {
                     return;
                 }
             }
 
-            $this->setSessionSavePath(CYGNITE_BASE.DS.$path.'temp'.DS.'sessions'.DS);
-            $this->setSessionName($this->config['SESSION_CONFIG']['cf_session_name']);
+            $this->setSessionSavePath(CYGNITE_BASE.DS.$path.DS.'temp'.DS.'sessions'.DS);
+            $this->setSessionName($this->config['cf_session_name']);
             //$this->setCookieParams($session_array);
 
             @session_start();
@@ -251,11 +252,11 @@ class Session extends Security
 
     /*Session functions need to be edit as per save handler  end  */
 
-    public function getsessionId()
+    public function getSessionId()
     {
-        if($_SESSION['initiated'] === true):
-                   return session_id();
-        endif;
+        if (@$_SESSION['initiated'] == true) {
+            return session_id();
+        }
     }
 
     public function regenaratedId($sessionId = false)
@@ -266,7 +267,7 @@ class Session extends Security
 
     private function isSessionStarted()
     {
-        return ($this->getsessionId() !='') ? true : false;
+        return ($this->getSessionId() !='') ? true : false;
     }
 
     private function setSessionName($name)
