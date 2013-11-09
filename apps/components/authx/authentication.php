@@ -31,7 +31,7 @@ use Apps\Components\Authx\Identity;
  *
  *
  */
-
+ 
 class Authentication
 {
     public $username;
