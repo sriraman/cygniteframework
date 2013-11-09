@@ -20,7 +20,7 @@ use Apps\Components\Authx\Identity;
  *
  * @package              Apps
  * @subpackages          Components
- * @filename             Identity
+ * @filename             Authentication
  * @description          This file is used to map all routing of the cygnite framework
  * @author               Sanjoy Dey
  * @copyright            Copyright (c) 2013 - 2014,
@@ -38,6 +38,8 @@ class Authentication
     public $credentials = array();
     public $sessionDetails = array();
     private $cfAuth;
+    private $data = array();
+    public $msg = 'has authenticated successfully !';
 
     public function __construct($instance)
     {
@@ -71,7 +73,7 @@ class Authentication
             $userCredentials= $this->cfAuth->where($whereQuery)->findAll();
 
         } catch (\Exception $ex) {
-            echo $ex->getTraceAsString();
+            throw new \Exception($ex->getMessage());
         }
 
         if (($this->cfAuth->rowCount() && count($userCredentials) ) > 0) {
@@ -80,19 +82,22 @@ class Authentication
                 $this->cfAuth->userCredentials['password']
             ) {
                 $credentials['isLoggedIn'] =  true;
-                $credentials['flashMsg'] = ucfirst($this->username).' has authenticated successfully !';
+                $credentials['flashMsg'] = ucfirst($this->username).' '.$this->msg;
 
                 $this->sessionDetails = $this->cfAuth->getSessionConfig();
 
                 foreach ($this->sessionDetails['value'] as $key => $val) {
-                        $credentials[$val] =    $userCredentials[0][$val];
-                        unset($userCredentials[0][$val]);
+
+                        $credentials[$val] =    $userCredentials[0]->$val;
+                        unset($userCredentials[0]->$val);
                 }
 
                 $isSessionExists= Cygnite::loader()->session->save(
                     $this->sessionDetails['key'],
                     $credentials
                 );
+
+                $this->setUserDetails($credentials);
 
                 return ($isSessionExists == true) ?
                     true :
@@ -140,6 +145,30 @@ class Authentication
     public function attempts()
     {
 
+    }
+
+    private function setUserDetails($credentialArray)
+    {
+        foreach ($credentialArray as $key => $value) {
+            $this->{$key} = $value;
+        }
+
+    }
+
+    /**
+     * Magic Method for handling dynamic data access.
+     */
+    public function __get($key)
+    {
+        return $this->data[$key];
+    }
+
+    /**
+     * Magic Method for handling the dynamic setting of data.
+     */
+    public function __set($key, $value)
+    {
+        $this->data[$key] = $value;
     }
 
     public function logout()
