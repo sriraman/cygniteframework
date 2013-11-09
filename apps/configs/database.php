@@ -46,8 +46,8 @@ if (!defined('CF_SYSTEM')) {
  *
  * <code>
  * 'db'  => 'mysql://root:@localhost/cygnite?charset=utf8',
- * 'db1' => 'mysql://root:admin@localhost/mis?charset=utf8',
- * 'db2' => 'mysql://root:root@localhost/mis?charset=utf8',
+ * 'db1' => 'mysql://root:admin@localhost/business?charset=utf8',
+ * 'db2' => 'mysql://root:root@localhost/apspages?charset=utf8',
  *
  * </code>
  *
