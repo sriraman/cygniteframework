@@ -18,7 +18,7 @@ class Welcome extends BaseController
     *
     * Your GET request of "welcome/form" will respond like below -
     *
-    *      public function action_form()
+    *      public function formAction()
     *     {
     *         echo "Cygnite : Hello ! World ";
     *     }
@@ -28,7 +28,7 @@ class Welcome extends BaseController
     * You can also pass parameters into the function as below-
     * Your request to  "welcome/form/2134" will pass to
     *
-    *      public function action_form($id = ")
+    *      public function formAction($id = ")
     *      {
     *         echo "Cygnite : Your user Id is $id";
     *      }
@@ -74,10 +74,10 @@ class Welcome extends BaseController
 
         $auth = new Authentication($authConfig);
 
-        if ($auth->identifyUser() == false) {
-            echo "User Authenticated Successfully";
+        if ($auth->identifyUser() == true) {
+            echo $auth->flashMsg;
         } else {
-            throw new \Exception("Not a valid User");
+            echo "Not a valid User";
         }
 
         $this->createSections(
