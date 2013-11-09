@@ -4,10 +4,45 @@ namespace Cygnite\Libraries;
 use Cygnite\Cygnite;
 use Cygnite\Inflectors;
 use Closure;
+use Cygnite\Input;
+
+/**
+ *  Cygnite Framework
+ *
+ *  An open source application development framework for PHP 5.3x or newer
+ *
+ *   License
+ *
+ *   This source file is subject to the MIT license that is bundled
+ *   with this package in the file LICENSE.txt.
+ *   http://www.cygniteframework.com/license.txt
+ *   If you did not receive a copy of the license and are unable to
+ *   obtain it through the world-wide-web, please send an email
+ *   to sanjoy@hotmail.com so I can send you a copy immediately.
+ *
+ * @Package                   :  Packages
+ * @Sub Packages              :  libraries
+ * @Filename                  :  Validator
+ * @Description               :  Validator library is to validate your form input fields.
+ *
+ * @Author                    :  Sanjoy Dey
+ * @Copyright                 :  Copyright (c) 2013 - 2014,
+ * @Link	              :  http://www.cygniteframework.com
+ * @Since	              :  Version 1.0
+ * @Filesource
+ * @Warning                   :  Any changes in this library can cause abnormal behaviour of the framework
+ *
+ */
 /*
+ * @example
 <code>
-    $validation = Validation::instance(
-        $_POST,
+    $input = Input::getInstance(
+			function ($instance) {
+				return $instance;
+			}
+		);
+    $validator = Validator::instance(
+        $input,
         function ($validate) {
             $validate->addRule('username', 'required|min:3|max:5')
                 ->addRule('password', 'required|is_int|valid_date')
@@ -19,19 +54,19 @@ use Closure;
     );
 
 
-    if ($validation->run()) {
+    if ($validator->run()) {
         echo 'valid';
     } else {
-        show($validation->getErrors());
+        show($validator->getErrors());
     }
 </code>
 */
 
 
-class Validation
+class Validator
 {
     /**
-    * POST or GET
+    * POST
     * @var array
     */
     private $param;
@@ -42,23 +77,48 @@ class Validation
 
     public $columns = array();
 
-    private $validPhoneNumbers = array(10,11,13,14,91);
+    private $validPhoneNumbers = array(10,11,13,14,91,81);
 
     const ERROR = '_error';
 
 
-    private function __construct(array $var)
+    /*
+     * Constructor to set as private.
+     * You cannot create instance ob validator directly
+     *
+     * set post values into param array
+     *
+     * @param  $var post values
+     *
+     */
+    private function __construct(Input $var)
     {
-        $this->param = $var;
+        if ($var instanceof Input) {
+            $this->param = $var->post();
+        }
     }
 
-
-    public static function instance(array $var, Closure $callback)
+    /*
+     * Get the validator instance with closure callback
+     *
+     * @param  $var post values
+     * @param  Closure callback
+     * @return object
+     *
+     */
+    public static function instance($var, Closure $callback)
     {
-        return $callback(new Validation($var));
+        return $callback(new self($var));
     }
 
-
+    /*
+    * Add validation rule
+    *
+    * @param  $key
+    * @param  $rule set up your validation rule
+    * @return $this
+    *
+    */
     public function addRule($key, $rule)
     {
         $this->rules[$key] = $rule;
@@ -66,6 +126,13 @@ class Validation
         return $this;
     }
 
+    /*
+    * Set required fields
+    *
+    * @param  $key
+    * @return boolean true or false
+    *
+    */
     private function required($key)
     {
         $val = trim($this->param[$key]);
@@ -269,7 +336,7 @@ class Validation
                     !strstr($rule, 'min')
                 ) {
 
-                    $method = Cygnite::loader()->inflectors->$this->toCameCase($rule);
+                    $method = Cygnite::loader()->inflectors->toCameCase($rule);
 
                     if (is_callable(array($this, $method)) === false) {
                         throw new \Exception('Undefined method '.__CLASS__.' '.$method.' called.');
