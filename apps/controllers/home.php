@@ -15,7 +15,7 @@ class Home extends BaseController
     *
     * Your GET request of "home/form" will respond like below -
     *
-    *      public function action_form()
+    *     public function formAction()
     *     {
     *            echo "Cygnite : Hellow ! World ";
     *     }
@@ -25,7 +25,7 @@ class Home extends BaseController
     * You can also pass parameters into the function as below-
     * Your request to  "home/form/2134" will pass to
     *
-    *      public function action_form($id = ")
+    *      public function formAction($id = ")
     *      {
     *             echo "Cygnite : Your user Id is $id";
     *      }
