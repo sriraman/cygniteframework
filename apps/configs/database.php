@@ -59,7 +59,7 @@ Configurations::initialize(
         $config->setConfig(
             array(
              'db'  => 'mysql://root:@localhost/cygnite?charset=utf8',
-             'db1' => 'mysql://root:@localhost/mis?charset=utf8',
+             'db1' => 'mysql://root:@localhost/apspages?charset=utf8',
             )
         );
     }
