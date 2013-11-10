@@ -632,22 +632,22 @@ class ActiveRecords extends Connections
         $data = array();
 
         switch ($fetchMode) {
-            case 'FETCH_GROUP':
+            case 'GROUP':
                 $data = $statement->fetchAll(PDO::FETCH_GROUP| PDO::FETCH_ASSOC);
                 break;
-            case 'FETCH_BOTH':
+            case 'BOTH':
                 $data = $statement->fetchAll(PDO::FETCH_BOTH);
                 break;
             case 'JSON':
                 $data = json_encode($statement->fetchAll(PDO::FETCH_ASSOC));
                 break;
-            case 'FETCH_OBJ':
+            case 'OBJ':
                 $data = $statement->fetchAll(PDO::FETCH_OBJ);
                 break;
-            case 'FETCH_ASSOC':
+            case 'ASSOC':
                 $data = $statement->fetchAll(PDO::FETCH_ASSOC);
                 break;
-            case 'FETCH_COLUMN':
+            case 'COLUMN':
                 $data = $statement->fetchAll(PDO::FETCH_COLUMN);
                 break;
             default:
