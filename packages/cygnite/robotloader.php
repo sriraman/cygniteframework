@@ -18,16 +18,16 @@ if (!defined('CF_SYSTEM')) {
  *   obtain it through the world-wide-web, please send an email
  *   to sanjoy@hotmail.com so I can send you a copy immediately.
  *
- *@package                         :  Packages
- *@subpackages                :  Base
- *@filename                        :  CF_RobotLoader
- *@description                    : This is registry auto loader for CF
- *@author                           : Sanjoy Dey
- *@copyright                     :  Copyright (c) 2013 - 2014,
- *@link	                   :  http://www.cygniteframework.com
- *@since	                  :  Version 1.0
+ *@package                    :  Packages
+ *@subpackages                :  Cygnite
+ *@filename                   :  RobotLoader
+ *@description                :  This file used to autoload all files.
+ *@author                     : Sanjoy Dey
+ *@copyright                  :  Copyright (c) 2013 - 2014,
+ *@link	                      :  http://www.cygniteframework.com
+ *@since	              :  Version 1.0
  *@filesource
- *@warning                     :  Any changes in this library can cause abnormal behaviour of the framework
+ *@warning                    :  Any changes in this library can cause abnormal behaviour of the framework
  *
  *
  */
@@ -161,7 +161,7 @@ class RobotLoader
                 ) {
                     //$rootDir = $ds=  ''; Original
                     $rootDir = '';
-		            $ds=  DS;
+		    $ds=  DS;
                 } else {
                     $rootDir = CF_SYSTEM.DS;
                     $ds = DS;
