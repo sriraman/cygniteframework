@@ -159,7 +159,9 @@ class RobotLoader
                     self::$_classNames[self::changeCase($_classNames['\\'.$className], true)]
                 )
                 ) {
-                    $rootDir = $ds=  '';
+                    //$rootDir = $ds=  ''; Original
+                    $rootDir = '';
+		            $ds=  DS;
                 } else {
                     $rootDir = CF_SYSTEM.DS;
                     $ds = DS;
