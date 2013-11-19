@@ -122,7 +122,7 @@ abstract class Connections
             return static::$connections[$databaseName];
 
         } catch (\PDOException $e) {
-            throw new \Exceptions($e->getMessage());
+            throw new \Exception($e->getMessage());
         }
 
     }
