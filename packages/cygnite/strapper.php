@@ -47,7 +47,7 @@ if (defined('CF_SYSTEM') === false) {
  */
 
 if (Config::getConfig('global_config', 'enable_profiling') == true) {
-      Profiler::start('cygnite_start');
+      Profiler::start();
 }
 
 /**
@@ -159,4 +159,6 @@ function onExceptions()
  */
  Cygnite::loader()->request('dispatcher', $router);
 
- Profiler::end('cygnite_start');
+ if (Config::getConfig('global_config', 'enable_profiling') == true) {
+    Profiler::end();
+ }
