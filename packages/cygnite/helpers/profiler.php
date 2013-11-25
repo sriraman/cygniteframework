@@ -68,7 +68,7 @@ class Profiler
     * @false	string
     */
 
-    public static function end($endToken = 'cygnite_end')
+    public static function end($endToken = 'cygnite_start')
     {
         $html = "";
         $html .= "<div id='benchmark'>
